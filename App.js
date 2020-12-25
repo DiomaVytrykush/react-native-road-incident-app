@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Map from './components/Map';
-import Incidents from './components/Incidents';
+import Map from './screens/Map';
+import Incidents from './screens/Incidents';
 
 const Stack = createStackNavigator();
 
