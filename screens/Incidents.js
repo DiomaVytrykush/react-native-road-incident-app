@@ -14,7 +14,7 @@ const incidents = [
       latitude: 49.4058459,
       longitude: 24.3179882792436,
     },
-    id: 0,
+    id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
     title: 'Hello',
     description: 'description',
     photos: null,
@@ -25,7 +25,7 @@ const incidents = [
       latitude: 49.44135415341,
       longitude: 24.3441341421,
     },
-    id: 1,
+    id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
     title: 'Hello2',
     description: 'description2',
     photos: null,
@@ -36,7 +36,7 @@ const incidents = [
       latitude: 49.414235415341,
       longitude: 24.3451341421,
     },
-    id: 3,
+    id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
     title: 'Hello3',
     description: 'description3',
     photos: null,
@@ -50,24 +50,7 @@ const Incidents = ({navigation}) => {
 
   const deleteIncident = (id) => {
     const incidentDeleted = allIncidents.filter((item) => item.id !== id);
-
     setAllIncident(incidentDeleted);
-  };
-
-  const addIncident = () => {
-    const newIncedent = {
-      latlng: {
-        latitude: 49.4058459,
-        longitude: 24.3179882792436,
-      },
-      id: 0,
-      title: 'Hello',
-      description: 'description',
-      photos: null,
-      createdAt: new Date().toISOString().split('T')[0],
-    };
-
-    setAllIncident([...incidents, newIncedent]);
   };
 
   return (
@@ -98,7 +81,7 @@ const Incidents = ({navigation}) => {
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
             style={styles.navigateButton}
-            onPress={() => navigation.navigate('Map', {allIncidents})}>
+            onPress={() => navigation.navigate('Map', {allIncidents,setAllIncident})}>
             <Text>Go to map</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -111,6 +94,8 @@ const Incidents = ({navigation}) => {
           <ModalWindow
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            allIncidents={allIncidents}
+            setAllIncident={setAllIncident}
           />
         )}
       </View>
