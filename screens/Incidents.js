@@ -7,58 +7,18 @@ import {
   ScrollView,
 } from 'react-native';
 import ModalWindow from '../components/Modal';
+import {connect} from 'react-redux';
+import {deleteIncedent} from '../redux/actions/incidents';
 
-const incidents = [
-  {
-    latlng: {
-      latitude: 49.4058459,
-      longitude: 24.3179882792436,
-    },
-    id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
-    title: 'Hello',
-    description: 'description',
-    photos: null,
-    createdAt: new Date().toISOString().split('T')[0],
-  },
-  {
-    latlng: {
-      latitude: 49.44135415341,
-      longitude: 24.3441341421,
-    },
-    id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
-    title: 'Hello2',
-    description: 'description2',
-    photos: null,
-    createdAt: new Date().toISOString().split('T')[0],
-  },
-  {
-    latlng: {
-      latitude: 49.414235415341,
-      longitude: 24.3451341421,
-    },
-    id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
-    title: 'Hello3',
-    description: 'description3',
-    photos: null,
-    createdAt: new Date().toISOString().split('T')[0],
-  },
-];
-
-const Incidents = ({navigation}) => {
-  const [allIncidents, setAllIncident] = React.useState(incidents);
+const Incidents = ({navigation, incidents, deleteIncident}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
-
-  const deleteIncident = (id) => {
-    const incidentDeleted = allIncidents.filter((item) => item.id !== id);
-    setAllIncident(incidentDeleted);
-  };
 
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        {allIncidents.length != 0 ? (
+        {incidents.length != 0 ? (
           <View>
-            {allIncidents.map((i) => (
+            {incidents.map((i) => (
               <View key={i.id} style={styles.incedents}>
                 <TouchableOpacity
                   style={styles.deleteButton}
@@ -81,7 +41,7 @@ const Incidents = ({navigation}) => {
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
             style={styles.navigateButton}
-            onPress={() => navigation.navigate('Map', {allIncidents,setAllIncident})}>
+            onPress={() => navigation.navigate('Map')}>
             <Text>Go to map</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -94,8 +54,6 @@ const Incidents = ({navigation}) => {
           <ModalWindow
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
-            allIncidents={allIncidents}
-            setAllIncident={setAllIncident}
           />
         )}
       </View>
@@ -154,4 +112,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Incidents;
+const mapStateToProps = (state) => {
+  return {
+    incidents: state.incidentReducer.incidentsList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteIncident: (id) => dispatch(deleteIncedent(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Incidents);

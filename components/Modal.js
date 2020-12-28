@@ -8,29 +8,14 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import {connect} from 'react-redux';
+import {addIncedent} from '../redux/actions/incidents';
 
-const ModalWindow = ({
-  modalVisible,
-  setModalVisible,
-  allIncidents,
-  setAllIncident,
-}) => {
+const ModalWindow = ({modalVisible, setModalVisible, addIncedent}) => {
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [latitude, setLatitude] = React.useState('');
   const [longitude, setLongitude] = React.useState('');
-  const [newIncedent, setNewIncedent] = React.useState({});
-
-  React.useEffect((e) => {
-    setNewIncedent({
-      latlng: e ? e.nativeEvent.coordinate :  {latitude, longitude} ,
-      id: (new Date() - Math.floor(Math.random() * 10000000000)).toString(),
-      title,
-      description,
-      photos: null,
-      createdAt: new Date().toISOString().split('T')[0],
-    });
-  }, [latitude, longitude, title, description]);
 
   const modalElement = (label, value, setValue) => {
     return (
@@ -45,9 +30,18 @@ const ModalWindow = ({
     );
   };
 
-  const addIncedent = () => {
-    setAllIncident([...allIncidents, newIncedent]);
-    setModalVisible(!modalVisible);
+  const addIncedentFucn = () => {
+    if (
+      title.trim() === '' ||
+      description.trim() === '' ||
+      latitude.trim() === '' ||
+      longitude.trim() === ''
+    ) {
+      Alert.alert('All filds are required');
+    } else {
+      addIncedent(title, description, latitude, longitude);
+      setModalVisible(!modalVisible);
+    }
   };
 
   return (
@@ -68,18 +62,7 @@ const ModalWindow = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={{...styles.openButton, backgroundColor: 'green'}}
-            onPress={() => {
-              if (
-                title.trim() === '' ||
-                description.trim() === '' ||
-                latitude.trim() === '' ||
-                longitude.trim() === ''
-              ) {
-                Alert.alert('All filds are required');
-              } else {
-                addIncedent();
-              }
-            }}>
+            onPress={() => addIncedentFucn()}>
             <Text style={styles.textStyle}>Create</Text>
           </TouchableOpacity>
         </View>
@@ -126,4 +109,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalWindow;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addIncedent: (title, description, latitude, longitude) =>
+      dispatch(addIncedent(title, description, latitude, longitude)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ModalWindow);
