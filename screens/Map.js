@@ -2,9 +2,9 @@ import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import {connect} from 'react-redux';
-import {addIncedent} from '../redux/actions/incidents';
+import {addIncident} from '../redux/actions/incidents';
 
-const Map = ({navigation, incidents, addIncedent}) => {
+const Map = ({navigation, incidents, addIncident}) => {
   const [region, setRegion] = React.useState({
     latitude: 49.4058459,
     longitude: 24.3179882792436,
@@ -22,7 +22,7 @@ const Map = ({navigation, incidents, addIncedent}) => {
         showsMyLocationButton={true}
         showsCompass={true}
         onPress={(e) =>
-          addIncedent(
+          addIncident(
             'Tap to edit',
             'Tap to edit',
             e.nativeEvent.coordinate.latitude,
@@ -91,8 +91,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addIncedent: (title, description, latitude, longitude) =>
-      dispatch(addIncedent(title, description, latitude, longitude)),
+    addIncident: (title, description, latitude, longitude) =>
+      dispatch(addIncident(title, description, latitude, longitude)),
   };
 };
 

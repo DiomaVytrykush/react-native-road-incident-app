@@ -62,6 +62,15 @@ const initialReducer = (state = initialState, action) => {
     case CHANGE_INCIDENT:
       return {
         ...state,
+        incidentsList: state.incidentsList.map((incident) =>
+          incident.id === action.id
+            ? {
+                ...incident,
+                title: action.title,
+                description: action.description,
+              }
+            : incident,
+        ),
       };
     default:
       return state;

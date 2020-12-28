@@ -9,9 +9,9 @@ import {
   Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {addIncedent} from '../redux/actions/incidents';
+import {addIncident} from '../redux/actions/incidents';
 
-const ModalWindow = ({modalVisible, setModalVisible, addIncedent}) => {
+const ModalWindow = ({modalVisible, setModalVisible, addIncident}) => {
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [latitude, setLatitude] = React.useState('');
@@ -39,7 +39,7 @@ const ModalWindow = ({modalVisible, setModalVisible, addIncedent}) => {
     ) {
       Alert.alert('All filds are required');
     } else {
-      addIncedent(title, description, latitude, longitude);
+      addIncident(title, description, latitude, longitude);
       setModalVisible(!modalVisible);
     }
   };
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addIncedent: (title, description, latitude, longitude) =>
-      dispatch(addIncedent(title, description, latitude, longitude)),
+    addIncident: (title, description, latitude, longitude) =>
+      dispatch(addIncident(title, description, latitude, longitude)),
   };
 };
 

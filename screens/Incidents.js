@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import ModalWindow from '../components/Modal';
 import {connect} from 'react-redux';
-import {deleteIncedent} from '../redux/actions/incidents';
+import {deleteIncident} from '../redux/actions/incidents';
 
 const Incidents = ({navigation, incidents, deleteIncident}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -120,7 +120,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteIncident: (id) => dispatch(deleteIncedent(id)),
+    deleteIncident: (id) => dispatch(deleteIncident(id)),
   };
 };
 
