@@ -12,6 +12,15 @@ const Map = ({navigation, incidents, addIncident}) => {
     longitudeDelta: 0.0421,
   });
 
+  const addIncidentFunc = (e) => {
+    addIncident(
+      'Tap to edit',
+      'Tap to edit',
+      e.nativeEvent.coordinate.latitude,
+      e.nativeEvent.coordinate.longitude,
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#f0f0f0'}}>
       <MapView
@@ -21,14 +30,7 @@ const Map = ({navigation, incidents, addIncident}) => {
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsCompass={true}
-        onPress={(e) =>
-          addIncident(
-            'Tap to',
-            'Tap to edit',
-            e.nativeEvent.coordinate.latitude,
-            e.nativeEvent.coordinate.longitude,
-          )
-        }>
+        onPress={(e) => addIncidentFunc(e)}>
         {incidents.map((marker, index) => (
           <Marker
             key={index}

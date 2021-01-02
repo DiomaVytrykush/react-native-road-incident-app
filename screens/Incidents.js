@@ -5,10 +5,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
 import ModalWindow from '../components/Modal';
 import {connect} from 'react-redux';
 import {deleteIncident} from '../redux/actions/incidents';
+import Button from '../components/Button';
 
 const Incidents = ({navigation, incidents, deleteIncident}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -23,9 +25,10 @@ const Incidents = ({navigation, incidents, deleteIncident}) => {
                 <TouchableOpacity
                   style={styles.deleteButton}
                   onPress={() => deleteIncident(i.id)}>
-                  <Text>X</Text>
+                  <Image
+                    style={styles.image}
+                    source={require('../assets/delete.png')}></Image>
                 </TouchableOpacity>
-                <Text style={{margin: 5}}>ID: {i.id}</Text>
                 <Text style={{margin: 5}}>Name: {i.title}</Text>
                 <Text style={{margin: 5}}>Description: {i.description}</Text>
                 <Text style={{margin: 5}}>Created at: {i.createdAt}</Text>
@@ -39,16 +42,16 @@ const Incidents = ({navigation, incidents, deleteIncident}) => {
           <Text style={styles.noIncedents}>There are no incidents</Text>
         )}
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            style={styles.navigateButton}
-            onPress={() => navigation.navigate('Map')}>
-            <Text>Go to map</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.createButton}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text>Create incedent</Text>
-          </TouchableOpacity>
+          <Button
+            text={'Go to map'}
+            onPress={() => navigation.navigate('Map')}
+            styleButton={{width: '45%'}}
+          />
+          <Button
+            text={'Create incident'}
+            onPress={() => setModalVisible(!modalVisible)}
+            styleButton={{width: '45%', backgroundColor: '#238057'}}
+          />
         </View>
         {modalVisible && (
           <ModalWindow
@@ -62,48 +65,25 @@ const Incidents = ({navigation, incidents, deleteIncident}) => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {flex: 1},
+  scrollView: {flex: 1, backgroundColor: '#fff'},
   container: {
     flex: 1,
-    alignItems: 'center',
-    marginVertical: 50,
+    marginHorizontal: 20,
   },
   incedents: {flexDirection: 'column', marginTop: 30},
   deleteButton: {
-    borderWidth: 2,
-    borderColor: 'grey',
-    borderRadius: 20,
-    padding: 10,
-    width: 80,
     alignItems: 'center',
     alignSelf: 'flex-end',
   },
+  image: {
+    width: 30,
+    height: 30
+  },
   buttonWrapper: {
-    marginTop: 100,
     flex: 1,
+    marginVertical: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  navigateButton: {
-    marginRight: 50,
-    borderWidth: 2,
-    borderColor: 'grey',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '35%',
-    height: 60,
-  },
-  createButton: {
-    borderWidth: 2,
-    borderColor: 'green',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '35%',
-    height: 60,
   },
   noIncedents: {
     flex: 1,

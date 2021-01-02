@@ -5,17 +5,33 @@ import Map from './screens/Map';
 import Incidents from './screens/Incidents';
 import Details from './screens/Details';
 
-
 const Stack = createStackNavigator();
+
+const customScreen = (name, component) => {
+  return (
+    <Stack.Screen
+      name={name}
+      component={component}
+      options={{
+        headerStyle: {
+          backgroundColor: 'darkorange',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    />
+  );
+};
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Incidents">
-        <Stack.Screen name="Incidents" component={Incidents} />
-        <Stack.Screen name="Map" component={Map} />
-        <Stack.Screen name="Details" component={Details} />
-
+        {customScreen('Incidents', Incidents)}
+        {customScreen('Map', Map)}
+        {customScreen('Details', Details)}
       </Stack.Navigator>
     </NavigationContainer>
   );

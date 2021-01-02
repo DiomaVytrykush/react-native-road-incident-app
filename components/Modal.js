@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  TextInput,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, Modal, TextInput, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {addIncident} from '../redux/actions/incidents';
+import Button from './Button';
 
 const ModalWindow = ({modalVisible, setModalVisible, addIncident}) => {
   const [title, setTitle] = React.useState('');
@@ -25,6 +18,7 @@ const ModalWindow = ({modalVisible, setModalVisible, addIncident}) => {
           value={value}
           onChangeText={(e) => setValue(e)}
           placeholder="Write here"
+          style={styles.input}
         />
       </View>
     );
@@ -45,26 +39,28 @@ const ModalWindow = ({modalVisible, setModalVisible, addIncident}) => {
   };
 
   return (
-    <Modal animationType="slide" transparent={true} visible={modalVisible}>
+    <Modal animationType="fade" transparent={true} visible={modalVisible}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           {modalElement('Title:', title, setTitle)}
           {modalElement('Description:', description, setDescription)}
-          <Text>Coordinates:</Text>
+          <Text style={{marginVertical:10}}>Coordinates:</Text>
           {modalElement('Latitude:', latitude, setLatitude)}
           {modalElement('Longitude:', longitude, setLongitude)}
-          <TouchableOpacity
-            style={styles.openButton}
-            onPress={() => {
-              setModalVisible(!modalVisible);
-            }}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{...styles.openButton, backgroundColor: 'green'}}
-            onPress={() => addIncedentFucn()}>
-            <Text style={styles.textStyle}>Create</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonWrapper}>
+            <Button
+              text={'Hide Modal'}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+              styleButton={{width: '45%'}}
+            />
+            <Button
+              text={'Create'}
+              onPress={() => addIncedentFucn()}
+              styleButton={{width: '45%', backgroundColor: '#238057'}}
+            />
+          </View>
         </View>
       </View>
     </Modal>
@@ -73,9 +69,11 @@ const ModalWindow = ({modalVisible, setModalVisible, addIncident}) => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
-    marginTop: 22,
+    backgroundColor: 'rgba(100,100,100, 0.5)',
   },
   modalView: {
     margin: 20,
@@ -91,20 +89,15 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  openButton: {
-    marginTop: 50,
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalElement: {
+  buttonWrapper: {
+    flex: 1,
+    marginVertical: 40,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  input: {
+    borderBottomWidth: 1,
+    paddingBottom: 8,
     marginVertical: 10,
   },
 });
