@@ -23,7 +23,7 @@ const Map = ({navigation, incidents, addIncident}) => {
         showsCompass={true}
         onPress={(e) =>
           addIncident(
-            'Tap to edit',
+            'Tap to',
             'Tap to edit',
             e.nativeEvent.coordinate.latitude,
             e.nativeEvent.coordinate.longitude,
